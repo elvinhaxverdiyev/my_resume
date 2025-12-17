@@ -14,7 +14,6 @@ class ImageInline(admin.TabularInline):
 
 @admin.register(Resume)
 class ResumeAdmin(admin.ModelAdmin):
-    """CV modeli üçün admin konfiqurasiyası"""
     
     list_display = ('full_name', 'position', 'age', 'linkedin_short', 'github_short', 'instagram_short', 'facebook_short', 'images_count')
     list_display_links = ('full_name',)
