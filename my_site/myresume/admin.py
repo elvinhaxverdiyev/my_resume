@@ -4,7 +4,6 @@ from .models import Resume, Projects, Image
 
 
 class ImageInline(admin.TabularInline):
-    """Image modeli üçün inline admin"""
     model = Image
     extra = 1
     fields = ('image', 'resume', 'projects')
