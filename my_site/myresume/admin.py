@@ -32,7 +32,6 @@ class ResumeAdmin(admin.ModelAdmin):
     inlines = [ImageInline]
     
     def linkedin_short(self, obj):
-        """LinkedIn linkinin qısa versiyası"""
         if obj.linkedin:
             return obj.linkedin[:30] + '...' if len(obj.linkedin) > 30 else obj.linkedin
         return '-'
