@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="az">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -27,30 +28,71 @@
             <!-- Profile Header -->
             <div class="profile-header">
                 <div class="profile-image">
-                    <img src="https://via.placeholder.com/200" alt="Profile" id="profile-img">
+                    {% if resume and resume.images.first %}
+                        <img src="{{ resume.images.first.image.url }}" alt="Profile" id="profile-img">
+                    {% else %}
+                        <img src="https://via.placeholder.com/200" alt="Profile" id="profile-img">
+                    {% endif %}
                 </div>
-                <h1 class="name">Ad Soyad</h1>
-                <p class="title">Veb Developer / Dizayner</p>
+                {% if resume %}
+                    <h1 class="name">{{ resume.full_name|default:"Ad Soyad" }}</h1>
+                    <p class="title">{{ resume.position|default:"Veb Developer / Dizayner" }}</p>
+                {% else %}
+                    <h1 class="name">Ad Soyad</h1>
+                    <p class="title">Veb Developer / Dizayner</p>
+                {% endif %}
                 <div class="social-links">
-                    <a href="#"><i class="fab fa-github"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    {% if resume %}
+                        {% if resume.github %}
+                            <a href="{{ resume.github }}" target="_blank"><i class="fab fa-github"></i></a>
+                        {% endif %}
+                        {% if resume.linkedin %}
+                            <a href="{{ resume.linkedin }}" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        {% endif %}
+                        {% if resume.instagram %}
+                            <a href="{{ resume.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                        {% endif %}
+                        {% if resume.facebook %}
+                            <a href="{{ resume.facebook }}" target="_blank"><i class="fab fa-facebook"></i></a>
+                        {% endif %}
+                    {% else %}
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    {% endif %}
                 </div>
                 <h2 id="laihelerim" class="laihelerim-title" style="margin-top: 80px; font-size: 2.5rem; text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Laihelerim</h2>
             </div>
 
             <!-- Laihelerim Cards -->
             <div class="laihelerim-cards">
-                <a href="project-detail.html" class="laihe-card" style="text-decoration: none; color: inherit;">
-                    <div class="laihe-card-content">
-                        <h3>Layihə 1</h3>
-                        <p>Layihə haqqında məlumat</p>
-                    </div>
-                    <div class="laihe-card-image">
-                        <img src="https://via.placeholder.com/400x300" alt="Layihə 1">
-                    </div>
-                </a>
+                {% if projects %}
+                    {% for project in projects %}
+                        <a href="{% url 'project_detail' project.id %}" class="laihe-card" style="text-decoration: none; color: inherit;">
+                            <div class="laihe-card-content">
+                                <h3>{{ project.name|default:"Layihə" }}</h3>
+                                <p>{{ project.description|default:"Layihə haqqında məlumat"|truncatewords:15 }}</p>
+                            </div>
+                            <div class="laihe-card-image">
+                                {% if project.images.first %}
+                                    <img src="{{ project.images.first.image.url }}" alt="{{ project.name|default:'Layihə' }}">
+                                {% else %}
+                                    <img src="https://via.placeholder.com/400x300" alt="{{ project.name|default:'Layihə' }}">
+                                {% endif %}
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <a href="{% url 'home' %}#laihelerim" class="laihe-card" style="text-decoration: none; color: inherit;">
+                        <div class="laihe-card-content">
+                            <h3>Layihə 1</h3>
+                            <p>Layihə haqqında məlumat</p>
+                        </div>
+                        <div class="laihe-card-image">
+                            <img src="https://via.placeholder.com/400x300" alt="Layihə 1">
+                        </div>
+                    </a>
+                {% endif %}
             </div>
 
             <!-- Scroll to Contact Button -->
@@ -135,7 +177,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="{% static 'script.js' %}"></script>
 </body>
 </html>
 

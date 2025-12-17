@@ -31,3 +31,20 @@ class Projects(models.Model):
     class Meta:
         verbose_name = 'Layihə'
         verbose_name_plural = 'Layihələr'
+        
+        
+class Image(models.Model):
+    resume = models.ForeignKey(Resume, related_name='images', on_delete=models.CASCADE, blank=True, null=True, verbose_name='CV')
+    projects = models.ForeignKey(Projects, related_name='images', on_delete=models.CASCADE, blank=True, null=True, verbose_name='Layihə')
+    image = models.ImageField(upload_to='images/', verbose_name='Şəkil')
+    
+    def __str__(self):
+        if self.projects:
+            return f"{self.projects.name} - Şəkil" if self.projects.name else "Layihə Şəkli"
+        elif self.resume:
+            return f"{self.resume.full_name} - Şəkil" if self.resume.full_name else "CV Şəkli"
+        return "Şəkil"
+    
+    class Meta:
+        verbose_name = 'Şəkil'
+        verbose_name_plural = 'Şəkillər'
