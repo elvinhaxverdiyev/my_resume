@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">Portfolio</div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Ana Səhifə</a></li>
+                <li><a href="#laihelerim" class="nav-link">Laihelerim</a></li>
+                <li><a href="#contact" class="nav-link">Əlaqə</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Section - Resume -->
+    <section id="home" class="resume-section">
+        <div class="container">
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="profile-image">
+                    <img src="https://via.placeholder.com/200" alt="Profile" id="profile-img">
+                </div>
+                <h1 class="name">Ad Soyad</h1>
+                <p class="title">Veb Developer / Dizayner</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+                <h2 id="laihelerim" class="laihelerim-title" style="margin-top: 80px; font-size: 2.5rem; text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Laihelerim</h2>
+            </div>
+
+            <!-- Laihelerim Cards -->
+            <div class="laihelerim-cards">
+                <a href="project-detail.html" class="laihe-card" style="text-decoration: none; color: inherit;">
+                    <div class="laihe-card-content">
+                        <h3>Layihə 1</h3>
+                        <p>Layihə haqqında məlumat</p>
+                    </div>
+                    <div class="laihe-card-image">
+                        <img src="https://via.placeholder.com/400x300" alt="Layihə 1">
+                    </div>
+                </a>
+            </div>
+
+            <!-- Scroll to Contact Button -->
+            <div class="scroll-button">
+                <a href="#contact" class="btn-primary">
+                    <span>Əlaqə Formuna Keç</span>
+                    <i class="fas fa-arrow-down"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Əlaqə Saxlayın</h2>
+                <p>Suallarınız və ya təklifləriniz varsa, mənimlə əlaqə saxlayın</p>
+            </div>
+            
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3>Ünvan</h3>
+                            <p>Bakı, Azərbaycan</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3>Telefon</h3>
+                            <p><a href="tel:+994XXXXXXXXX" class="contact-link">+994 XX XXX XX XX</a></p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3>Email</h3>
+                            <p><a href="mailto:example@email.com" class="contact-link">example@email.com</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="contact-form" action="mailto:example@email.com" method="post" enctype="text/plain">
+                    <div class="form-group">
+                        <label for="name">Ad Soyad</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Mövzu</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Mesaj</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">
+                        <span>Göndər</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Portfolio. Bütün hüquqlar qorunur.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
