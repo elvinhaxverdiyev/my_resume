@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="az">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Layihə Detalları - Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -228,9 +229,9 @@
         <div class="container">
             <div class="logo">Portfolio</div>
             <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">Ana Səhifə</a></li>
-                <li><a href="index.html#laihelerim" class="nav-link">Laihelerim</a></li>
-                <li><a href="index.html#contact" class="nav-link">Əlaqə</a></li>
+                <li><a href="{% url 'home' %}" class="nav-link">Ana Səhifə</a></li>
+                <li><a href="{% url 'home' %}#laihelerim" class="nav-link">Laihelerim</a></li>
+                <li><a href="{% url 'home' %}#contact" class="nav-link">Əlaqə</a></li>
             </ul>
         </div>
     </nav>
@@ -238,71 +239,93 @@
     <!-- Project Detail Section -->
     <section class="project-detail-section">
         <div class="container">
-            <a href="index.html#laihelerim" class="back-button">
+            <a href="{% url 'home' %}#laihelerim" class="back-button">
                 <i class="fas fa-arrow-left"></i>
                 <span>Geri Qayıt</span>
             </a>
 
             <div class="project-header">
-                <h1>Layihə Adı</h1>
-                <p>Layihə haqqında qısa təsvir və məqsəd burada yerləşəcək. Bu layihə nə üçün yaradılıb və hansı problemləri həll edir.</p>
+                <h1>{{ project.name|default:"Layihə Adı" }}</h1>
+                <p>{{ project.description|default:"Layihə haqqında qısa təsvir və məqsəd burada yerləşəcək. Bu layihə nə üçün yaradılıb və hansı problemləri həll edir."|truncatewords:30 }}</p>
             </div>
 
             <div class="project-content">
                 <div class="project-image">
-                    <img src="https://via.placeholder.com/600x400" alt="Layihə Şəkli">
+                    {% if project.images.first %}
+                        <img src="{{ project.images.first.image.url }}" alt="Layihə Şəkli">
+                    {% else %}
+                        <img src="https://via.placeholder.com/600x400" alt="Layihə Şəkli">
+                    {% endif %}
                 </div>
 
                 <div class="project-info">
                     <h2>Layihə Haqqında</h2>
-                    <p>
-                        Bu layihə haqqında ətraflı məlumat burada yerləşəcək. Layihənin məqsədi, 
-                        istifadə olunan texnologiyalar, həll edilən problemlər və əldə edilən 
-                        nəticələr haqqında məlumat veriləcək.
-                    </p>
-                    <p>
-                        Layihənin əsas xüsusiyyətləri və funksionallığı burada təsvir olunacaq. 
-                        İstifadəçilər üçün nə təklif edir və necə işləyir.
-                    </p>
+                    {% if project.description %}
+                        <p>{{ project.description|linebreaks }}</p>
+                    {% else %}
+                        <p>
+                            Bu layihə haqqında ətraflı məlumat burada yerləşəcək. Layihənin məqsədi, 
+                            istifadə olunan texnologiyalar, həll edilən problemlər və əldə edilən 
+                            nəticələr haqqında məlumat veriləcək.
+                        </p>
+                    {% endif %}
 
-                    <div class="project-tech">
-                        <h3>İstifadə olunan Texnologiyalar</h3>
-                        <div class="tech-tags">
-                            <span class="tech-tag">HTML</span>
-                            <span class="tech-tag">CSS</span>
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Node.js</span>
+                    {% if technologies_list %}
+                        <div class="project-tech">
+                            <h3>İstifadə olunan Texnologiyalar</h3>
+                            <div class="tech-tags">
+                                {% for tech in technologies_list %}
+                                    <span class="tech-tag">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
                         </div>
-                    </div>
+                    {% elif project.technologies %}
+                        <div class="project-tech">
+                            <h3>İstifadə olunan Texnologiyalar</h3>
+                            <div class="tech-tags">
+                                <span class="tech-tag">{{ project.technologies }}</span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="project-tech">
+                            <h3>İstifadə olunan Texnologiyalar</h3>
+                            <div class="tech-tags">
+                                <span class="tech-tag">HTML</span>
+                                <span class="tech-tag">CSS</span>
+                                <span class="tech-tag">JavaScript</span>
+                            </div>
+                        </div>
+                    {% endif %}
 
                     <div class="project-links">
-                        <a href="#" class="project-link">
-                            <i class="fas fa-external-link-alt"></i>
-                            <span>Live Demo</span>
-                        </a>
-                        <a href="#" class="project-link secondary">
-                            <i class="fab fa-github"></i>
-                            <span>GitHub</span>
-                        </a>
+                        {% if project.site_link %}
+                            <a href="{{ project.site_link }}" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span>Live Demo</span>
+                            </a>
+                        {% endif %}
+                        {% if project.github %}
+                            <a href="{{ project.github }}" target="_blank" class="project-link {% if project.site_link %}secondary{% endif %}">
+                                <i class="fab fa-github"></i>
+                                <span>GitHub</span>
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
 
-            <div class="project-gallery">
-                <h2>Layihə Şəkilləri</h2>
-                <div class="gallery-grid">
-                    <div class="gallery-item">
-                        <img src="https://via.placeholder.com/400x250" alt="Layihə Şəkli 1">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://via.placeholder.com/400x250" alt="Layihə Şəkli 2">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://via.placeholder.com/400x250" alt="Layihə Şəkli 3">
+            {% if project.images.all %}
+                <div class="project-gallery">
+                    <h2>Layihə Şəkilləri</h2>
+                    <div class="gallery-grid">
+                        {% for image in project.images.all %}
+                            <div class="gallery-item">
+                                <img src="{{ image.image.url }}" alt="Layihə Şəkli {{ forloop.counter }}">
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
     </section>
 
@@ -313,7 +336,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="{% static 'script.js' %}"></script>
 </body>
 </html>
 
