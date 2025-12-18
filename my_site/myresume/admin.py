@@ -92,28 +92,24 @@ class ProjectsAdmin(admin.ModelAdmin):
     technologies_preview.short_description = 'Texnologiyalar'
     
     def site_link_short(self, obj):
-        """Sayt linkinin qısa versiyası"""
         if obj.site_link:
             return obj.site_link[:30] + '...' if len(obj.site_link) > 30 else obj.site_link
         return '-'
     site_link_short.short_description = 'Sayt Linki'
     
     def github_short(self, obj):
-        """GitHub linkinin qısa versiyası"""
         if obj.github:
             return obj.github[:30] + '...' if len(obj.github) > 30 else obj.github
         return '-'
     github_short.short_description = 'GitHub'
     
     def images_count(self, obj):
-        """Project-ə aid şəkillərin sayı"""
         return obj.images.count()
     images_count.short_description = 'Şəkillər'
 
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    """Şəkil modeli üçün admin konfiqurasiyası"""
     
     list_display = ('image_preview', 'resume', 'projects', 'created_info')
     list_display_links = ('image_preview',)
@@ -127,14 +123,12 @@ class ImageAdmin(admin.ModelAdmin):
     )
     
     def image_preview(self, obj):
-        """Şəklin kiçik önizləməsi"""
         if obj.image:
             return format_html('<img src="{}" style="max-width: 100px; max-height: 100px;" />', obj.image.url)
         return '-'
     image_preview.short_description = 'Şəkil'
     
     def created_info(self, obj):
-        """Yaradılma məlumatı"""
         if obj.id:
             return f'ID: {obj.id}'
         return '-'
