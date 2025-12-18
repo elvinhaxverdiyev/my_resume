@@ -38,35 +38,30 @@ class ResumeAdmin(admin.ModelAdmin):
     linkedin_short.short_description = 'LinkedIn'
     
     def github_short(self, obj):
-        """GitHub linkinin qısa versiyası"""
         if obj.github:
             return obj.github[:30] + '...' if len(obj.github) > 30 else obj.github
         return '-'
     github_short.short_description = 'GitHub'
     
     def instagram_short(self, obj):
-        """Instagram linkinin qısa versiyası"""
         if obj.instagram:
             return obj.instagram[:30] + '...' if len(obj.instagram) > 30 else obj.instagram
         return '-'
     instagram_short.short_description = 'Instagram'
     
     def facebook_short(self, obj):
-        """Facebook linkinin qısa versiyası"""
         if obj.facebook:
             return obj.facebook[:30] + '...' if len(obj.facebook) > 30 else obj.facebook
         return '-'
     facebook_short.short_description = 'Facebook'
     
     def images_count(self, obj):
-        """Resume-ə aid şəkillərin sayı"""
         return obj.images.count()
     images_count.short_description = 'Şəkillər'
 
 
 @admin.register(Projects)
 class ProjectsAdmin(admin.ModelAdmin):
-    """Layihələr modeli üçün admin konfiqurasiyası"""
     
     list_display = ('name', 'description_preview', 'technologies_preview', 'site_link_short', 'github_short', 'images_count')
     list_display_links = ('name',)
@@ -75,7 +70,7 @@ class ProjectsAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ('Layihə Məlumatları', {
-            'fields': ('name', 'description', 'technologies')
+            'fields': ('name', 'description', 'technologies', 'main_image')
         }),
         ('Linklər', {
             'fields': ('site_link', 'github')
@@ -85,14 +80,12 @@ class ProjectsAdmin(admin.ModelAdmin):
     inlines = [ImageInline]
     
     def description_preview(self, obj):
-        """Təsvirin qısa versiyasını göstərir"""
         if obj.description:
             return obj.description[:50] + '...' if len(obj.description) > 50 else obj.description
         return '-'
     description_preview.short_description = 'Təsvir'
     
     def technologies_preview(self, obj):
-        """Texnologiyaların qısa versiyasını göstərir"""
         if obj.technologies:
             return obj.technologies[:30] + '...' if len(obj.technologies) > 30 else obj.technologies
         return '-'
