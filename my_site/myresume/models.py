@@ -24,6 +24,7 @@ class Projects(models.Model):
     technologies = models.TextField(blank=True, null=True, verbose_name='Texnologiyalar')
     site_link = models.URLField(blank=True, null=True, verbose_name='Sayt adresi')
     github = models.URLField(blank=True, null=True, verbose_name='Github linki')
+    main_image = models.ImageField(upload_to='images/', blank=True, null=True, verbose_name='Əsas Şəkil')
     
     def __str__(self):
         return self.name if self.name else "Unnamed Project"

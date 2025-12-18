@@ -74,7 +74,9 @@
                                 <p>{{ project.description|default:"Layihə haqqında məlumat"|truncatewords:15 }}</p>
                             </div>
                             <div class="laihe-card-image">
-                                {% if project.images.first %}
+                                {% if project.main_image %}
+                                    <img src="{{ project.main_image.url }}" alt="{{ project.name|default:'Layihə' }}">
+                                {% elif project.images.first %}
                                     <img src="{{ project.images.first.image.url }}" alt="{{ project.name|default:'Layihə' }}">
                                 {% else %}
                                     <img src="https://via.placeholder.com/400x300" alt="{{ project.name|default:'Layihə' }}">
